@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -eu
+
+cd "$(dirname $0)/../"
+pip install -r scripts/requirements.txt
+apt-get -qq update
+apt-get -qq -y install tree 2>&1 > /dev/null

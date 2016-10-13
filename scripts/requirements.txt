@@ -1,0 +1,2 @@
+colorama==0.3.6
+invoke==0.13.0

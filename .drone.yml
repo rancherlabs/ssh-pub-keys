@@ -7,3 +7,14 @@ pipeline:
       - /var/run/docker.sock:/var/run/docker.sock
     commands:
       - dapper ./scripts/ci
+
+# Needs envvar SLACK_TOKEN
+slack_blame:
+  image: plugins/slack-blame
+  channel: ci_cd
+  success_template: |
+    {{repo.owner}}/{{repo.name}} branch: {{build.branch}} commit: {{build.commit}} by {{build.author}} <{{build.email}}> - {{commit.message}} - {{build.link}}
+  failure_template: |
+    {{repo.owner}}/{{repo.name}} branch: {{build.branch}} commit: {{build.commit}} by {{build.author}} <{{build.email}}> - {{commit.message}} - {{build.link}}
+  when:
+    status: [ success, failure ]

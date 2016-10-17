@@ -25,6 +25,13 @@ def log_error(msg):
 
 
 #
+def claxon_and_exit(msg):
+    # blink text does not work for many TERMs :\
+    sys.stderr.write(Back.RED + Style.BRIGHT + Fore.WHITE + msg + os.linesep + Fore.RESET + Style.NORMAL)
+    sys.exit(-10)
+
+
+#
 def log_success(msg):
     print(Back.BLACK + Style.BRIGHT + Fore.GREEN + msg + Fore.RESET + Style.NORMAL)
 
@@ -72,6 +79,9 @@ def check_file(keysfile):
             for line in f:
                 lineno += 1
                 line = line.rstrip()
+                if 'PRIVATE KEY' in line:
+                    log_error("File \'{}\' appears to contain a private key!".format(keysfile))
+                    claxon_and_exit("If this key is present in a git push or pull request it should now be considered compromised as it appears in the ref log in the public repository!")
                 if debug_mode():
                     log_debug("Checking key at line {}...".format(lineno))
                 if False is validate_ssh_pub_key(line):
@@ -94,11 +104,11 @@ def check_dir(keyspath):
     for root, dirs, files in os.walk(keyspath, topdown=False):
         if debug_mode():
             log_debug("Checking: root: {}, dir: {}, files: {}...".format(root, dirs, files))
-            
+
         for f in files:
             if False is check_file("{}/{}".format(root, f)):
                 result = False
-            
+
     return result
 
 
@@ -106,7 +116,7 @@ def check_dir(keyspath):
 def main():
     keydir = './ssh-pub-keys'
 
-    
+
     log_info("Checking contents of \'{}\'...".format(keydir))
     run("tree {}".format(keydir))
 

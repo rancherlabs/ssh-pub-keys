@@ -2,6 +2,11 @@
 
 Text database of Rancher Labs public ssh keys.
 
+# Goals
+* avoid the use of shared SSH keys (for instance in CI environments)
+* make it easy to populate a node with required set of keys from the command-line (curl, wget, httpie, etc)
+* make the repo layout flexible enough to simulate "groups" for different use-cases.
+
 # Usage
 
 Use your favorite HTTP client to pull down a set of public SSH keys. The repo is organized

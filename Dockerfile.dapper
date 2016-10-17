@@ -1,6 +1,5 @@
 FROM python:3
 
-ENV DAPPER_RUN_ARGS --rm
 ENV TERM=ansi DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true
 
 ADD ./ssh-pub-keys /workdir/ssh-pub-keys

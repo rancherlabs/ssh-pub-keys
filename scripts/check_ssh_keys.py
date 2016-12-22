@@ -85,7 +85,7 @@ def check_file(keysfile):
                 if debug_mode():
                     log_debug("Checking key at line {}...".format(lineno))
                 if False is validate_ssh_pub_key(line):
-                    log_error("Failed to validate line \'{}\' in file \'{}\' against regex \'{}\'!".format(line, keysfile))
+                    log_error("Failed to validate line '{}' in file '{}'!".format(line, keysfile))
                     return False
     except IOError as e:
         log_error("Failed on open() for \'{}\' :: {} :: {}".format(
